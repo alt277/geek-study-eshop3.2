@@ -1,0 +1,75 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="aleks_ush (generated)" id="1609171379547-1">
+        <createTable tableName="brands">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="brandsPK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="aleks_ush (generated)" id="1609171379547-2">
+        <createTable tableName="categories">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="categoriesPK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="aleks_ush (generated)" id="1609171379547-3">
+        <createTable tableName="products">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="productsPK"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DECIMAL(19, 2)"/>
+            <column name="brand_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="aleks_ush (generated)" id="1609171379547-4">
+        <addUniqueConstraint columnNames="name" constraintName="UC_BRANDSNAME_COL" tableName="brands"/>
+    </changeSet>
+    <changeSet author="aleks_ush (generated)" id="1609171379547-5">
+        <addUniqueConstraint columnNames="name" constraintName="UC_CATEGORIESNAME_COL" tableName="categories"/>
+    </changeSet>
+    <changeSet author="aleks_ush (generated)" id="1609171379547-6">
+        <addForeignKeyConstraint baseColumnNames="brand_id" baseTableName="products" constraintName="FKa3a4mpsfdf4d2y6r8ra3sc8mv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="brands" validate="true"/>
+    </changeSet>
+    <changeSet author="aleks_ush (generated)" id="1609171379547-7">
+        <addForeignKeyConstraint baseColumnNames="category_id" baseTableName="products" constraintName="FKog2rp4qthbtt2lfyhfo32lsw9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="categories" validate="true"/>
+    </changeSet>
+
+    <changeSet author="aleks_ush" id="1609171379547-8">
+        <sqlFile dbms="mysql"
+                 encoding="UTF-8"
+                 endDelimiter="\nGO"
+                 path="insert-categories.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+        <rollback/>
+    </changeSet>
+
+    <changeSet author="aleks_ush" id="1609171379547-9">
+        <sqlFile dbms="mysql"
+                 encoding="UTF-8"
+                 endDelimiter="\nGO"
+                 path="insert-brands.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+        <rollback/>
+    </changeSet>
+
+</databaseChangeLog>
